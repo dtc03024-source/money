@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>신랑·신부 카드 추가 사용 가능액 계산기</title>
+  <title>개인 카드 추가 사용 가능액 계산기</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
@@ -11,15 +11,8 @@
       padding: 16px;
       background: #f5f5f5;
     }
-    h1 {
-      font-size: 20px;
-      margin-bottom: 8px;
-    }
-    h2 {
-      font-size: 18px;
-      margin-top: 16px;
-      margin-bottom: 8px;
-    }
+    h1 { font-size: 20px; margin-bottom: 8px; }
+    h2 { font-size: 18px; margin-top: 16px; margin-bottom: 8px; }
     .card {
       background: #ffffff;
       border-radius: 8px;
@@ -27,11 +20,7 @@
       margin-bottom: 12px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.08);
     }
-    label {
-      display: block;
-      font-size: 13px;
-      margin-top: 6px;
-    }
+    label { display: block; font-size: 13px; margin-top: 6px; }
     input[type="number"], input[type="text"] {
       width: 100%;
       box-sizing: border-box;
@@ -52,16 +41,9 @@
       background: #1976d2;
       color: #fff;
     }
-    button:active {
-      background: #115293;
-    }
-    .result {
-      font-size: 14px;
-      line-height: 1.6;
-    }
-    .result strong {
-      font-weight: 600;
-    }
+    button:active { background: #115293; }
+    .result { font-size: 14px; line-height: 1.6; }
+    .result strong { font-weight: 600; }
     .small {
       font-size: 12px;
       color: #666;
@@ -70,249 +52,177 @@
   </style>
 </head>
 <body>
-  <h1>신랑·신부 카드 추가 사용 가능액 계산기</h1>
-  <div class="small">※ 신용/체크카드 위주, 간이 연말정산 시뮬레이터 (대략적인 참고용)</div>
 
-  <div class="card">
-    <h2>남편(신랑)</h2>
-    <div class="small">올해 예상 총급여 계산</div>
-    <label>올해 지금까지 근무한 개월 수 (예: 8)
-      <input id="h_months_worked" type="number" min="0" max="12" value="8">
-    </label>
-    <label>지금까지 받은 총급여 합계(세전, 원)
-      <input id="h_ytd_salary" type="text" placeholder="예: 24,000,000"
-             oninput="showUnit('h_ytd_salary', 'h_ytd_salary_unit')">
-      <div class="small" id="h_ytd_salary_unit">0원</div>
-    </label>
-    <label>현재 월급(세전, 원)
-      <input id="h_current_month_salary" type="text" placeholder="예: 3,000,000"
-             oninput="showUnit('h_current_month_salary', 'h_current_month_salary_unit')">
-      <div class="small" id="h_current_month_salary_unit">0원</div>
-    </label>
-    <label>남은 기간 보너스/성과급 예상 합계(원, 없으면 0)
-      <input id="h_expected_bonus_rest" type="text" value="0"
-             oninput="showUnit('h_expected_bonus_rest', 'h_expected_bonus_rest_unit')">
-      <div class="small" id="h_expected_bonus_rest_unit">0원</div>
-    </label>
+<h1>개인 카드 추가 사용 가능액 계산기</h1>
+<div class="small">※ 신용/체크카드 위주, 간이 연말정산 참고용</div>
 
-    <div class="small" style="margin-top:8px;">지금까지 카드 사용액</div>
-    <label>신용카드 사용액 합계(원)
-      <input id="h_credit_spent" type="text" placeholder="예: 10,000,000"
-             oninput="showUnit('h_credit_spent', 'h_credit_spent_unit')">
-      <div class="small" id="h_credit_spent_unit">0원</div>
-    </label>
-    <label>체크/현금영수증 사용액 합계(원)
-      <input id="h_check_spent" type="text" placeholder="예: 3,000,000"
-             oninput="showUnit('h_check_spent', 'h_check_spent_unit')">
-      <div class="small" id="h_check_spent_unit">0원</div>
-    </label>
+<div class="card">
+  <h2>올해 예상 총급여</h2>
+  <label>올해 지금까지 근무한 개월 수 (예: 8)
+    <input id="months_worked" type="number" min="0" max="12" value="8">
+  </label>
+
+  <label>지금까지 받은 총급여 합계(세전, 원)
+    <input id="ytd_salary" type="text" placeholder="예: 24,000,000"
+      oninput="showUnit('ytd_salary', 'ytd_salary_unit')">
+    <div class="small" id="ytd_salary_unit">0원</div>
+  </label>
+
+  <label>현재 월급(세전, 원)
+    <input id="current_month_salary" type="text" placeholder="예: 3,000,000"
+      oninput="showUnit('current_month_salary', 'current_month_salary_unit')">
+    <div class="small" id="current_month_salary_unit">0원</div>
+  </label>
+
+  <label>남은 기간 보너스/성과급 예상 합계(원, 없으면 0)
+    <input id="expected_bonus_rest" type="text" value="0"
+      oninput="showUnit('expected_bonus_rest', 'expected_bonus_rest_unit')">
+    <div class="small" id="expected_bonus_rest_unit">0원</div>
+  </label>
+</div>
+
+<div class="card">
+  <h2>현재까지 카드 사용액</h2>
+
+  <label>신용카드 사용액 합계(원)
+    <input id="credit_spent" type="text" placeholder="예: 10,000,000"
+      oninput="showUnit('credit_spent', 'credit_spent_unit')">
+    <div class="small" id="credit_spent_unit">0원</div>
+  </label>
+
+  <label>체크/현금영수증 사용액 합계(원)
+    <input id="check_spent" type="text" placeholder="예: 3,000,000"
+      oninput="showUnit('check_spent', 'check_spent_unit')">
+    <div class="small" id="check_spent_unit">0원</div>
+  </label>
+</div>
+
+<button onclick="runCalc()">계산하기</button>
+
+<div class="card">
+  <h2>결과</h2>
+  <div id="detailResult" class="result"></div>
+  <hr>
+  <div class="result">
+    <strong>핵심 숫자</strong><br>
+    <span id="summaryResult"></span>
   </div>
+</div>
 
-  <div class="card">
-    <h2>아내(신부)</h2>
-    <div class="small">올해 예상 총급여 계산</div>
-    <label>올해 지금까지 근무한 개월 수 (예: 8)
-      <input id="w_months_worked" type="number" min="0" max="12" value="8">
-    </label>
-    <label>지금까지 받은 총급여 합계(세전, 원)
-      <input id="w_ytd_salary" type="text" placeholder="예: 26,000,000"
-             oninput="showUnit('w_ytd_salary', 'w_ytd_salary_unit')">
-      <div class="small" id="w_ytd_salary_unit">0원</div>
-    </label>
-    <label>현재 월급(세전, 원)
-      <input id="w_current_month_salary" type="text" placeholder="예: 3,300,000"
-             oninput="showUnit('w_current_month_salary', 'w_current_month_salary_unit')">
-      <div class="small" id="w_current_month_salary_unit">0원</div>
-    </label>
-    <label>남은 기간 보너스/성과급 예상 합계(원, 없으면 0)
-      <input id="w_expected_bonus_rest" type="text" value="0"
-             oninput="showUnit('w_expected_bonus_rest', 'w_expected_bonus_rest_unit')">
-      <div class="small" id="w_expected_bonus_rest_unit">0원</div>
-    </label>
+<script>
+  function parseNumber(str) {
+    if (!str) return 0;
+    const cleaned = str.toString().replace(/,/g, '').trim();
+    if (cleaned === '') return 0;
+    const n = Number(cleaned);
+    return isNaN(n) ? 0 : n;
+  }
 
-    <div class="small" style="margin-top:8px;">지금까지 카드 사용액</div>
-    <label>신용카드 사용액 합계(원)
-      <input id="w_credit_spent" type="text" placeholder="예: 9,000,000"
-             oninput="showUnit('w_credit_spent', 'w_credit_spent_unit')">
-      <div class="small" id="w_credit_spent_unit">0원</div>
-    </label>
-    <label>체크/현금영수증 사용액 합계(원)
-      <input id="w_check_spent" type="text" placeholder="예: 2,000,000"
-             oninput="showUnit('w_check_spent', 'w_check_spent_unit')">
-      <div class="small" id="w_check_spent_unit">0원</div>
-    </label>
-  </div>
+  function formatKRW(n) {
+    return n.toLocaleString('ko-KR');
+  }
 
-  <button onclick="runCalc()">계산하기</button>
+  function formatKoreanUnit(n) {
+    n = Math.floor(n || 0);
+    if (n <= 0) return "0원";
 
-  <div class="card">
-    <h2>결과</h2>
-    <div id="detailResult" class="result"></div>
-    <hr>
-    <div class="result">
-      <strong>핵심 4개 숫자</strong><br>
-      <span id="summaryResult"></span>
-    </div>
-  </div>
+    let result = "";
+    const eok = Math.floor(n / 100000000);
+    const man = Math.floor((n % 100000000) / 10000);
+    let rest = n % 10000;
 
-  <script>
-    function parseNumber(str) {
-      if (!str) return 0;
-      const cleaned = str.toString().replace(/,/g, '').trim();
-      if (cleaned === '') return 0;
-      const n = Number(cleaned);
-      return isNaN(n) ? 0 : n;
+    const cheon = Math.floor(rest / 1000); rest %= 1000;
+    const baek  = Math.floor(rest / 100);  rest %= 100;
+    const sip   = Math.floor(rest / 10);
+    const il    = rest % 10;
+
+    if (eok > 0) result += `${eok}억 `;
+    if (man > 0) result += `${man}만 `;
+    if (cheon > 0) result += `${cheon}천 `;
+    if (baek > 0) result += `${baek}백 `;
+    if (sip > 0) result += `${sip}십 `;
+    if (il > 0) result += `${il}원`;
+    else result += "원";
+
+    return result.trim();
+  }
+
+  function showUnit(inputId, labelId) {
+    const raw = parseNumber(document.getElementById(inputId).value);
+    document.getElementById(labelId).innerText = formatKoreanUnit(raw);
+  }
+
+  function estimateTotalSalary() {
+    const monthsWorked = parseInt(document.getElementById("months_worked").value || "0", 10);
+    const ytdSalary = parseNumber(document.getElementById("ytd_salary").value);
+    const currentMonthSalary = parseNumber(document.getElementById("current_month_salary").value);
+    const expectedBonusRest = parseNumber(document.getElementById("expected_bonus_rest").value);
+
+    let m = monthsWorked;
+    if (m < 0) m = 0;
+    if (m > 12) m = 12;
+
+    let remainingMonths = 12 - m;
+    if (remainingMonths < 0) remainingMonths = 0;
+
+    return ytdSalary + (currentMonthSalary * remainingMonths) + expectedBonusRest;
+  }
+
+  function calcCardDeductionBasic(totalSalary, creditSpent, checkSpent) {
+    const base = Math.floor(totalSalary * 0.25);
+    const totalSpent = creditSpent + checkSpent;
+
+    let limit = totalSalary <= 70_000_000 ? 3_000_000 : 2_500_000;
+
+    if (totalSpent <= base || totalSpent <= 0) {
+      return { nowDeduction: 0, limit, remain: limit, base };
     }
 
-    function formatKRW(n) {
-      return n.toLocaleString('ko-KR');
-    }
+    const excess = totalSpent - base;
+    const creditRatio = totalSpent > 0 ? (creditSpent / totalSpent) : 0;
+    const excessCredit = excess * creditRatio;
+    const excessCheck = excess * (1 - creditRatio);
 
-    // 한글 금액 단위(억/만/천/백/십/원)로 표시
-    function formatKoreanUnit(n) {
-      n = Math.floor(n || 0);
-      if (n <= 0) return "0원";
+    let nowDeduction = Math.floor(excessCredit * 0.15 + excessCheck * 0.30);
+    if (nowDeduction > limit) nowDeduction = limit;
 
-      let result = "";
+    return { nowDeduction, limit, remain: limit - nowDeduction, base };
+  }
 
-      const eok = Math.floor(n / 100000000);           // 억
-      const man = Math.floor((n % 100000000) / 10000); // 만
-      let rest = n % 10000;
+  function calcExtraLimits(remainDeduction) {
+    if (remainDeduction <= 0) return { creditNeeded: 0, checkNeeded: 0 };
+    return {
+      creditNeeded: Math.floor(remainDeduction / 0.15),
+      checkNeeded:  Math.floor(remainDeduction / 0.30)
+    };
+  }
 
-      const cheon = Math.floor(rest / 1000); rest %= 1000;
-      const baek  = Math.floor(rest / 100);  rest %= 100;
-      const sip   = Math.floor(rest / 10);
-      const il    = rest % 10;
+  function runCalc() {
+    const totalSalary = estimateTotalSalary();
+    const creditSpent = parseNumber(document.getElementById("credit_spent").value);
+    const checkSpent  = parseNumber(document.getElementById("check_spent").value);
 
-      if (eok > 0) result += `${eok}억 `;
-      if (man > 0) result += `${man}만 `;
-      if (cheon > 0) result += `${cheon}천 `;
-      if (baek > 0) result += `${baek}백 `;
-      if (sip > 0) result += `${sip}십 `;
-      if (il > 0) result += `${il}원`;
-      else result += "원";
+    const { nowDeduction, limit, remain, base } =
+      calcCardDeductionBasic(totalSalary, creditSpent, checkSpent);
 
-      return result.trim();
-    }
+    const { creditNeeded, checkNeeded } = calcExtraLimits(remain);
 
-    // 입력값을 한글 단위로 표시
-    function showUnit(inputId, labelId) {
-      const raw = parseNumber(document.getElementById(inputId).value);
-      document.getElementById(labelId).innerText = formatKoreanUnit(raw);
-    }
+    const totalSpent = creditSpent + checkSpent;
 
-    function estimateTotalSalary(prefix) {
-      const monthsWorked = parseInt(document.getElementById(prefix + "_months_worked").value || "0", 10);
-      const ytdSalary = parseNumber(document.getElementById(prefix + "_ytd_salary").value);
-      const currentMonthSalary = parseNumber(document.getElementById(prefix + "_current_month_salary").value);
-      const expectedBonusRest = parseNumber(document.getElementById(prefix + "_expected_bonus_rest").value);
+    document.getElementById("detailResult").innerHTML =
+      `예상 총급여: ${formatKRW(totalSalary)}원<br>` +
+      `총급여 25% 기준 사용액: ${formatKRW(base)}원<br>` +
+      `현재까지 사용액(신용+체크): ${formatKRW(totalSpent)}원<br>` +
+      `현재 추정 공제액: ${formatKRW(nowDeduction)}원 / 한도: ${formatKRW(limit)}원<br>` +
+      `남은 공제 여유: ${formatKRW(remain)}원<br><br>` +
+      `→ 신용카드로 세제 효과 있는 추가 사용 가능액: <strong>${formatKRW(creditNeeded)}원</strong><br>` +
+      `→ 체크카드로 세제 효과 있는 추가 사용 가능액: <strong>${formatKRW(checkNeeded)}원</strong>`;
 
-      let m = monthsWorked;
-      if (m < 0) m = 0;
-      if (m > 12) m = 12;
-      const totalMonths = 12;
-      let remainingMonths = totalMonths - m;
-      if (remainingMonths < 0) remainingMonths = 0;
+    document.getElementById("summaryResult").innerHTML =
+      `신용카드 추가 가능: <strong>${formatKRW(creditNeeded)}원</strong><br>` +
+      `체크카드 추가 가능: <strong>${formatKRW(checkNeeded)}원</strong>`;
+  }
+</script>
 
-      const futureSalary = currentMonthSalary * remainingMonths;
-      const expectedTotalSalary = ytdSalary + futureSalary + expectedBonusRest;
-      return expectedTotalSalary;
-    }
-
-    function calcCardDeductionBasic(totalSalary, creditSpent, checkSpent) {
-      const base = Math.floor(totalSalary * 0.25);
-      const totalSpent = creditSpent + checkSpent;
-
-      let limit;
-      if (totalSalary <= 70_000_000) {
-        limit = 3_000_000;
-      } else {
-        limit = 2_500_000;
-      }
-
-      if (totalSpent <= base || totalSpent <= 0) {
-        const nowDeduction = 0;
-        let remain = limit - nowDeduction;
-        if (remain < 0) remain = 0;
-        return { nowDeduction, limit, remain, base };
-      }
-
-      const excess = totalSpent - base;
-      const creditRatio = totalSpent > 0 ? (creditSpent / totalSpent) : 0;
-      const checkRatio  = totalSpent > 0 ? (checkSpent / totalSpent) : 0;
-
-      const excessCredit = excess * creditRatio;
-      const excessCheck  = excess * checkRatio;
-
-      let nowDeduction = Math.floor(excessCredit * 0.15 + excessCheck * 0.30);
-
-      if (nowDeduction > limit) nowDeduction = limit;
-      let remain = limit - nowDeduction;
-      if (remain < 0) remain = 0;
-
-      return { nowDeduction, limit, remain, base };
-    }
-
-    function calcExtraLimits(remainDeduction) {
-      if (remainDeduction <= 0) return { creditNeeded: 0, checkNeeded: 0 };
-      const creditNeeded = Math.floor(remainDeduction / 0.15);
-      const checkNeeded  = Math.floor(remainDeduction / 0.30);
-      return { creditNeeded, checkNeeded };
-    }
-
-    function runPerson(labelPrefix, labelName) {
-      const totalSalary = estimateTotalSalary(labelPrefix);
-      const creditSpent = parseNumber(document.getElementById(labelPrefix + "_credit_spent").value);
-      const checkSpent  = parseNumber(document.getElementById(labelPrefix + "_check_spent").value);
-
-      const { nowDeduction, limit, remain, base } = calcCardDeductionBasic(
-        totalSalary, creditSpent, checkSpent
-      );
-      const { creditNeeded, checkNeeded } = calcExtraLimits(remain);
-
-      return {
-        label: labelName,
-        totalSalary,
-        base,
-        creditSpent,
-        checkSpent,
-        nowDeduction,
-        limit,
-        remain,
-        creditNeeded,
-        checkNeeded
-      };
-    }
-
-    function runCalc() {
-      const husband = runPerson("h", "남편(신랑)");
-      const wife    = runPerson("w", "아내(신부)");
-
-      const detail = [];
-      [husband, wife].forEach(p => {
-        const totalSpent = p.creditSpent + p.checkSpent;
-        detail.push(
-          `<strong>[${p.label}]</strong><br>` +
-          `예상 총급여: ${formatKRW(p.totalSalary)}원<br>` +
-          `총급여 25% 기준 사용액: ${formatKRW(p.base)}원<br>` +
-          `현재까지 사용액(신용+체크): ${formatKRW(totalSpent)}원<br>` +
-          `현재 추정 공제액: ${formatKRW(p.nowDeduction)}원 / 한도: ${formatKRW(p.limit)}원<br>` +
-          `남은 공제 여유: ${formatKRW(p.remain)}원<br>` +
-          `→ 신용카드로 세제 효과 있는 추가 사용 가능액: <strong>${formatKRW(p.creditNeeded)}원</strong><br>` +
-          `→ 체크카드로 세제 효과 있는 추가 사용 가능액: <strong>${formatKRW(p.checkNeeded)}원</strong><br><br>`
-        );
-      });
-
-      document.getElementById("detailResult").innerHTML = detail.join("");
-
-      const summary =
-        `남편(신랑) 신용: <strong>${formatKRW(husband.creditNeeded)}원</strong> / ` +
-        `체크: <strong>${formatKRW(husband.checkNeeded)}원</strong><br>` +
-        `아내(신부) 신용: <strong>${formatKRW(wife.creditNeeded)}원</strong> / ` +
-        `체크: <strong>${formatKRW(wife.checkNeeded)}원</strong>`;
-
-      document.getElementById("summaryResult").innerHTML = summary;
-    }
-  </script>
 </body>
 </html>
